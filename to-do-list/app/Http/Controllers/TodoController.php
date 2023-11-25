@@ -12,8 +12,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::orderBy('created_at', 'desc')->get(); //Display result using descending order
-        //dd($todos);
+        $todos = Todo::get(); //Display result using descending order
+        
 
         return view('index', ['todos' => $todos]);
     }
@@ -31,7 +31,26 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,
+
+            [
+                'title'=>'required',
+                'content'=> 'required',
+                'due'=> 'required'
+
+
+            ]
+        
+        
+         );
+
+         $todo = new Todo();
+         $todo->title = $request->input('title');
+         $todo->content = $request->input('content');
+         $todo->due = $request->input('due');
+         $todo->save();
+         return redirect('/')->with('success', 'Todo created Successfully!!');
+
     }
 
     /**
@@ -51,6 +70,9 @@ class TodoController extends Controller
     public function edit(string $id)
     {
         //
+        $todo = Todo::find($id);
+
+        return view('edit')->with('todo',$todo);
     }
 
     /**
@@ -58,7 +80,12 @@ class TodoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $todo = Todo::find($id);
+        $todo->title = $request->input('title');
+         $todo->content = $request->input('content');
+         $todo->due = $request->input('due');
+         $todo->save();
+         return redirect('/')->with('success', 'Todo Edited Successfully!!');
     }
 
     /**
