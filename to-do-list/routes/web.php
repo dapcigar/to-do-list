@@ -16,4 +16,4 @@ use App\Http\Controllers\TodoController;
 
 Route::get('/', [TodoController::class, 'index']);
 
-Route::resource('todo', 'TodoController');
+Route::resource('todo', 'App\Http\Controllers\TodoController');

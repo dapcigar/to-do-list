@@ -12,7 +12,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::get();
+        $todos = Todo::orderBy('created_at', 'desc')->get(); //Display result using descending order
         //dd($todos);
 
         return view('index', ['todos' => $todos]);
@@ -23,7 +23,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -40,6 +40,9 @@ class TodoController extends Controller
     public function show(string $id)
     {
         //
+        $todo = Todo::find($id);
+
+        return view('show')->with('todo',$todo);
     }
 
     /**
